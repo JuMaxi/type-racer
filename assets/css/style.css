@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family= Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    --primary-color: #ff8400;
+    --secondary-color: white;
+    --primary-font: Nunito, sans-serif;
+    --secondary-font: Alegreya, serif;
+}
+body {
+    font-family: var(--primary-font), Arial, Helvetica, sans-serif;
+}
+.hero {
+    background-color: var(--primary-color);
+}
+
+h1 {
+    color: var(--secondary-color) !important;
+    font-family: var(--secondary-font);
+}
+
+.btn-game {
+    padding: 8px 14px;
+    background-color: var(--secondary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+}
+
+.btn-game:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+/* Apply border radius and border shadow to the results box */
+#results {
+    box-shadow: 0 0 10px var(--primary-color);
+    border-radius: 10px;
+    padding: 20px;
+    height: 175px;
+}
+
+#results p {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
