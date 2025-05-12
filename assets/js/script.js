@@ -20,8 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let startTime; // Variable to store the start time
     const userInput =  document.getElementById("user-input");
-    const startButton = document.getElementById("startButton");
-    const stopButton = document.getElementById("stopButton");
     const resultTime =  document.getElementById("resultTime");
     const textContainer = document.querySelector(".random-text");
     const difficulty = document.getElementById("difficultySelect");
@@ -40,15 +38,15 @@ document.addEventListener("DOMContentLoaded", function() {
         textContainer.textContent = randomText;
     }
 
-        // Function to update the random text based on the selected difficulty
+    // Function to update the random text based on the selected difficulty
     function updateRandomText() {
         const selectedDifficulty = difficulty.value; // Get the selected difficulty
         const randomText = getRandomText(selectedDifficulty); // Fetch a random text based on the selected difficulty
         textContainer.textContent = randomText; // Update the text container with the new random text
     }
 
-// Attach an event listener to the difficulty dropdown to update the random text when the difficulty changes
-difficulty.addEventListener("change", updateRandomText);
+    // Attach an event listener to the difficulty dropdown to update the random text when the difficulty changes
+    difficulty.addEventListener("change", updateRandomText);
 
     // Attach an event listener to the user input field to start the test when the user begins typing
     userInput.addEventListener("input", startTypingTest);
@@ -59,9 +57,6 @@ difficulty.addEventListener("change", updateRandomText);
     if (!startTime) {
         // Record the current time as the start time
         startTime = Date.now();
-
-        // Enable the stop button
-        stopButton.disabled = false;
 
         // Display a random text in the text container based on the selected difficulty
         const randomText = getRandomText(difficulty.value);
@@ -85,9 +80,6 @@ difficulty.addEventListener("change", updateRandomText);
 
         // Calculate and display WPM and difficulty level
         displayResults();
-
-        // Disable the stop button and enable the start button
-        stopButton.disabled = true;
 
         // Disable the user input field
         userInput.disabled = true;
