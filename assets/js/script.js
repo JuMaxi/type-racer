@@ -125,6 +125,44 @@ document.addEventListener("DOMContentLoaded", function() {
         resultWpm.textContent = wpm;
         level.textContent = difficulty.value.charAt(0).toUpperCase() + difficulty.value.slice(1);
     }
+
+    // Function to highlight the user's input in real time
+    function highlightTyping() {
+        // Get the user's input and the sample text
+        const userInputText = userInput.value;
+        const sampleText = textContainer.textContent;
+
+        // Split the user's input and the sample text into arrays of words
+        const userWords = userInputText.trim().split(/\s+/);
+        const sampleWords = sampleText.trim().split(/\s+/);
+
+        // Create a new array to store the highlighted words
+        const highlightedWords = [];
+
+        // Loop through the sample words and compare them with the user's words
+        for (let i = 0; i < sampleWords.length; i++) {
+            if (i < userWords.length) {
+                if (userWords[i] === sampleWords[i]) {
+                    // If the word is correct, wrap it in a span with a blue color
+                    highlightedWords.push(`<span style="color: blue;">${sampleWords[i]}</span>`);
+                } else {
+                    // If the word is incorrect, wrap it in a span with a red color
+                    highlightedWords.push(`<span style="color: red;">${sampleWords[i]}</span>`);
+                }
+            } else {
+                // If the word has not been typed yet, display it in the default color
+                highlightedWords.push(`<span style="color: black;">${sampleWords[i]}</span>`);
+            }
+        }
+
+        // Join the highlighted words into a single string and display them
+        textContainer.innerHTML = highlightedWords.join(" ");
+    }
+
+    // Attach an event listener to the user input field to call highlightTyping on every input
+    userInput.addEventListener("input", highlightTyping);
+
+// ...existing code...
      // Run the displayInitialText function when the page loads
     window.addEventListener("DOMContentLoaded", displayInitialText);
 
