@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("startButton");
     const stopButton = document.getElementById("stopButton");
     const resultTime =  document.getElementById("resultTime");
+    const textContainer = document.querySelector(".random-text");
+    const difficulty = document.getElementById("difficultySelect");
+    const resultWpm = document.getElementById("resultWPM");
+    const level = document.getElementById("resultLevel");
 
     // Function to get a random text based on the selected difficulty
     function getRandomText(difficulty) {
@@ -33,27 +37,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to display a random text on page load
     function displayInitialText() {
         const randomText = getRandomText("easy"); // Always fetch a random text from the "easy" level
-        const textContainer = document.querySelector(".random-text");
         textContainer.textContent = randomText;
     }
 
     // Event listener for the Start button
     startButton.addEventListener("click", function () {
-        // Get the selected difficulty level
-        const difficulty = document.getElementById("difficultySelect").value;
-
         // Get a random text based on the selected difficulty
-        const randomText = getRandomText(difficulty);
+        const randomText = getRandomText(difficulty.value);
 
         // Display the random text in the text container
-        const textContainer = document.querySelector(".random-text");
         textContainer.textContent = randomText;
 
         // Enable the user input field
         userInput.disabled = false;
     });
 
-  
 
     // Function to handle the start of the typing test
     function startTypingTest() {
@@ -81,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // Display the elapsed time in the results area
         resultTime.textContent = elapsedTime;
 
+        // Calculate and display WPM and difficulty level
+        displayResults();
+
         // Disable the stop button and enable the start button
         stopButton.disabled = true;
         startButton.disabled = false;
@@ -89,6 +90,41 @@ document.addEventListener("DOMContentLoaded", function() {
         userInput.disabled = true;
     }
 
+    // Function to calculate the number of correctly typed words
+    function calculateCorrectWords(userInputText, sampleText) {
+        const userWords = userInputText.trim().split(/\s+/);
+        const sampleWords = sampleText.trim().split(/\s+/);
+        let correctWords = 0;
+
+        // Compare each word in the user's input with the sample text
+        for (let i = 0; i < userWords.length; i++) {
+            if (userWords[i] === sampleWords[i]) {
+                correctWords++;
+            }
+        }
+
+        return correctWords;
+    }
+
+    // Function to calculate and display the WPM and difficulty level
+    function displayResults() {
+        // Get the user's input and the sample text
+        const userInputText = userInput.value;
+        const sampleText = textContainer.textContent;
+
+        // Calculate the number of correctly typed words
+        const correctWords = calculateCorrectWords(userInputText, sampleText);
+
+        // Calculate the elapsed time in minutes
+        const elapsedTimeInMinutes = (Date.now() - startTime) / 60000;
+
+        // Calculate WPM (Words Per Minute)
+        const wpm = Math.round(correctWords / elapsedTimeInMinutes);
+
+        // Display the WPM and difficulty level in the results area
+        resultWpm.textContent = wpm;
+        level.textContent = difficulty.value.charAt(0).toUpperCase() + difficulty.value.slice(1);
+    }
      // Run the displayInitialText function when the page loads
     window.addEventListener("DOMContentLoaded", displayInitialText);
 
