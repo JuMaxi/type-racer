@@ -40,32 +40,36 @@ document.addEventListener("DOMContentLoaded", function() {
         textContainer.textContent = randomText;
     }
 
-    // Event listener for the Start button
-    startButton.addEventListener("click", function () {
-        // Get a random text based on the selected difficulty
-        const randomText = getRandomText(difficulty.value);
+        // Function to update the random text based on the selected difficulty
+    function updateRandomText() {
+        const selectedDifficulty = difficulty.value; // Get the selected difficulty
+        const randomText = getRandomText(selectedDifficulty); // Fetch a random text based on the selected difficulty
+        textContainer.textContent = randomText; // Update the text container with the new random text
+    }
 
-        // Display the random text in the text container
-        textContainer.textContent = randomText;
+// Attach an event listener to the difficulty dropdown to update the random text when the difficulty changes
+difficulty.addEventListener("change", updateRandomText);
 
-        // Enable the user input field
-        userInput.disabled = false;
-    });
-
+    // Attach an event listener to the user input field to start the test when the user begins typing
+    userInput.addEventListener("input", startTypingTest);
 
     // Function to handle the start of the typing test
     function startTypingTest() {
+    // Check if the test has already started
+    if (!startTime) {
         // Record the current time as the start time
         startTime = Date.now();
 
-        // Disable the start button and enable the stop button
-        startButton.disabled = true;
+        // Enable the stop button
         stopButton.disabled = false;
 
-        // Enable the user input field
-        userInput.disabled = false;
-        userInput.value = "";
+        // Display a random text in the text container based on the selected difficulty
+        const randomText = getRandomText(difficulty.value);
+        textContainer.textContent = randomText;
+
+        // Focus on the user input field
         userInput.focus();
+    }
     }
 
     // Function to handle the end of the typing test
@@ -84,11 +88,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Disable the stop button and enable the start button
         stopButton.disabled = true;
-        startButton.disabled = false;
 
         // Disable the user input field
         userInput.disabled = true;
+
+        // Reset the start time for the next test
+        startTime = null;
     }
+
+    // Attach an event listener to the user input field to stop the test when the Enter key is pressed
+    userInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent the default behavior of the Enter key
+            stopTypingTest(); // Call the stopTypingTest function
+        }
+    });
 
     // Function to calculate the number of correctly typed words
     function calculateCorrectWords(userInputText, sampleText) {
@@ -162,11 +176,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Attach an event listener to the user input field to call highlightTyping on every input
     userInput.addEventListener("input", highlightTyping);
 
-// ...existing code...
-     // Run the displayInitialText function when the page loads
+    // Run the displayInitialText function when the page loads
     window.addEventListener("DOMContentLoaded", displayInitialText);
-
-    // Attach event listeners to the start and stop buttons
-    startButton.addEventListener("click", startTypingTest);
-    stopButton.addEventListener("click", stopTypingTest);
 })
