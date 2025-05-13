@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const level = document.getElementById("resultLevel");
     const retryButton = document.getElementById("retryButton");
     const instructionsButton = document.querySelector(".instructions");
+    const instructionsModal = document.getElementById("instructionsModal");
 
     // Attach an event listener to the retry button
     retryButton.addEventListener("click", resetTest);
@@ -39,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Add an event listener to open the modal when the button is clicked
     instructionsButton.addEventListener("click", showInstructions);
+
+    // Remove the backdrop when the modal button is closed
+    instructionsModal.addEventListener("hidden.bs.modal", removeBackdrops);
     
     // Function to get a random text based on the selected difficulty
     function getRandomText(difficulty) {
@@ -205,7 +209,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Function to show instructions to the game
     function showInstructions() {
-        const instructionsModal = new bootstrap.Modal(document.getElementById("instructionsModal"));
+        const instructionsModal = new bootstrap.Modal(instructionsModal);
         instructionsModal.show();
     }
-});
+
+    // Function to Remove any leftover backdrops
+    function removeBackdrops() {
+        const backdrops = document.querySelectorAll(".modal-backdrop");
+        backdrops.forEach((backdrop) => backdrop.remove());
+    }
+})
