@@ -25,7 +25,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const difficulty = document.getElementById("difficultySelect");
     const resultWpm = document.getElementById("resultWPM");
     const level = document.getElementById("resultLevel");
+    const retryButton = document.getElementById("retryButton");
+    const instructionsButton = document.querySelector(".instructions");
 
+    // Attach an event listener to the retry button
+    retryButton.addEventListener("click", resetTest);
+
+    // Attach an event listener to the user input field to call highlightTyping on every input
+    userInput.addEventListener("input", highlightTyping);
+
+    // Run the displayInitialText function when the page loads
+    window.addEventListener("DOMContentLoaded", displayInitialText);
+
+    // Add an event listener to open the modal when the button is clicked
+    instructionsButton.addEventListener("click", showInstructions);
+    
     // Function to get a random text based on the selected difficulty
     function getRandomText(difficulty) {
         const options = texts[difficulty];
@@ -165,9 +179,33 @@ document.addEventListener("DOMContentLoaded", function() {
         textContainer.innerHTML = highlightedWords.join(" ");
     }
 
-    // Attach an event listener to the user input field to call highlightTyping on every input
-    userInput.addEventListener("input", highlightTyping);
+    // Function to reset the test for a new attempt
+    function resetTest() {
+        // Clear the user's input
+        userInput.value = "";
 
-    // Run the displayInitialText function when the page loads
-    window.addEventListener("DOMContentLoaded", displayInitialText);
-})
+        // Enable the user input field
+        userInput.disabled = false;
+
+        // Reset the start time
+        startTime = null;
+
+        // Reset the results area
+        resultTime.textContent = "0";
+        resultWpm.textContent = "0";
+
+        // Display a new random text based on the current difficulty level
+        const selectedDifficulty = difficulty.value;
+        const randomText = getRandomText(selectedDifficulty);
+        textContainer.textContent = randomText;
+
+        // Focus on the user input field
+        userInput.focus();
+    }
+    
+    // Function to show instructions to the game
+    function showInstructions() {
+        const instructionsModal = new bootstrap.Modal(document.getElementById("instructionsModal"));
+        instructionsModal.show();
+    }
+});

@@ -12,8 +12,34 @@
 <body>
     <header class="container-fluid hero text-center p-4">
         <h1 class="pb-3">TypeRacer</h1>
-        <a href="#" class="btn btn-light btn-lg"><i class="fas fa-info-circle"></i>Instructions</a>
+        <a href="#" class="btn btn-light btn-lg instructions" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+            <i class="fas fa-info-circle"></i>Instructions
+        </a>
     </header>
+    <!-- Instructions Modal -->
+    <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instructionsModalLabel">How to Take the Typing Test</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                        <li>Select a difficulty level from the dropdown menu (Easy, Medium, or Hard).</li>
+                        <li>Click inside the text area to start typing the displayed text.</li>
+                        <li>Type the text as accurately and quickly as possible.</li>
+                        <li>Press the "Enter" key to finish the test.</li>
+                        <li>View your results, including Words Per Minute (WPM) and time taken.</li>
+                        <li>Click the "Retry" button to try again at the same difficulty level.</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <main>
         <section>
             <div class="container">
